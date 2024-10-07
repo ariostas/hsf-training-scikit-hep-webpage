@@ -2,30 +2,32 @@
 title: Setup
 ---
 
-# For the tutorial
+# Para el tutorial
 
-This tutorial uses a sampler of [Scikit-HEP project](https://scikit-hep.org/) packages (Uproot, Awkward Array, hist, Vector, zfit, Particle, fastjet), which are all components that you might or might not use in your analysis, as well as Python 3, NumPy, and a smattering of other mainstream libraries (Pandas, Matplotlib, JupyterLab, Numba).
+Este tutorial utiliza una muestra de los paquetes del [proyecto Scikit-HEP](https://scikit-hep.org/) (Uproot, Awkward Array, hist, Vector, zfit, Particle, fastjet), que son todos componentes que podrías utilizar en tu análisis, así como Python 3, NumPy y una variedad de otras librerías populares (Pandas, Matplotlib, JupyterLab, Numba).
 
-Rather than asking you to install them all, we provide two different ways to run everything in your browser: GitHub Codespaces and Binder.
-We recommend that you use GitHub Codespaces (see instructions below). If this is not an option for you, you can use Binder, though be aware that the resources might be very limited.
+En lugar de pedirte que los instales todos, ofrecemos dos formas diferentes de ejecutar todo en tu navegador: GitHub Codespaces y Binder.
+Recomendamos que uses GitHub Codespaces (lee las instrucciones a continuación). Si esta opción no es viable para ti, puedes usar Binder, aunque ten en cuenta que los recursos podrían ser muy limitados.
 
-## GitHub codespaces
+## GitHub Codespaces
 
+<!--
 <p align="center">
   <iframe width="427" height="251" src="https://www.youtube.com/embed/gcAuyqW4QRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
+-->
 
-In order to use GitHub codespaces, you need to create an account with [GitHub](github.com/) (it's free! You can also enter their education program for additional free stuff).
+Para usar GitHub Codespaces, necesitas crear una cuenta en [GitHub](https://github.com/) (¡es gratis! También puedes unirte a su programa educativo para obtener más beneficios gratuitos).
 
-Click the following button (a new page will open), then return to these instructions:
+Haz clic en el siguiente botón (se abrirá una nueva página), luego vuelve a estas instrucciones:
 
 <p align="center">
   <a href="https://codespaces.new/hsf-training/hsf-training-scikit-hep-webpage?quickstart=1" target="_blank">
-    <img src="https://github.com/codespaces/badge.svg" alt="Launch GitHub Codespaces">
+    <img src="https://github.com/codespaces/badge.svg" alt="Iniciar GitHub Codespaces">
   </a>
 </p>
 
-After starting the github codespace, take a look at the lines in the "Terminal" tab below. It might take a while until the environment is fully set up. If you see lines like this:
+Después de iniciar el codespace de GitHub, observa las líneas en la pestaña "Terminal" a continuación. Puede tomar un tiempo hasta que el entorno se configure por completo. Si ves líneas como estas:
 
 ```
 Use Cmd/Ctrl + Shift + P -> View Creation Log to see full logs
@@ -35,49 +37,48 @@ Use Cmd/Ctrl + Shift + P -> View Creation Log to see full logs
   › python3 -m pip install -r requirements.txt
 ```
 
-the installation is still progressing.
+la instalación sigue en progreso.
 
-Once you're done, you should only see an empty prompt like this:
+Una vez que hayas terminado, deberías ver solo un prompt vacío como este:
 
 ```
 @klieret ➜ /workspaces/hsf-training-scikit-hep-webpage (main) $
 ```
 
-Wait for a few seconds to see that nothing else runs.
+Espera unos segundos para asegurarte de que no se ejecute nada más.
 
-Now look at your left side-panel. You should see a file named `notebook.ipynb`. Click on it.
-A new tab with the notebook opens.
+Ahora mira el panel lateral izquierdo. Deberías ver un archivo llamado `notebook.ipynb`. Haz clic en él.
+Se abrirá una nueva pestaña con el notebook.
 
-> ## Note
-> If the notebook does not show up after several minutes (and you only see the "blue progress bar" on top),
-> you might want to try a different browser. There have been reports about this happening with
-> Safari on OSX and with firefox private windows.
+> ## Nota
+> Si el notebook no aparece después de varios minutos (y solo ves la "barra de progreso azul" en la parte superior),
+> podrías intentar usar un navegador diferente. Ha habido informes de que esto ocurre con
+> Safari en macOS y con ventanas privadas de Firefox.
 {: .callout}
 
-Try to execute the first line to see that everything is set up properly.
+Intenta ejecutar la primera línea para verificar que todo esté configurado correctamente.
 
-You're ready to go 🎉
+¡Estás listo para comenzar 🎉!
 
 ## Binder
 
-Simply click the following button:
+Simplemente haz clic en el siguiente botón:
 
 <p align="center">
   <a href="https://mybinder.org/v2/gh/hsf-training/hsf-training-scikit-hep-webpage/main?urlpath=lab" target="_blank">
-    <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder">
+    <img src="https://mybinder.org/badge_logo.svg" alt="Iniciar Binder">
   </a>
 </p>
 
+# Después del tutorial
 
-# After the tutorial
-
-If you want to install some of these packages on your own or your lab's computer, I recommend [Miniforge](https://github.com/conda-forge/miniforge) (or Anaconda/Miniconda with the [conda-forge channel](https://conda-forge.org/docs/user/introduction.html#how-can-i-install-packages-from-conda-forge)). This method also provides a way to [install ROOT in the same environment](https://github.com/conda-forge/root-feedstock#readme). To setup the environment use the [environment.yml](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/environment.yml) file (plus its [requirements.txt](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/requirements.txt) file) in [base](https://github.com/hsf-training/hsf-training-scikit-hep-webpage) of this repository as:
+Si deseas instalar algunos de estos paquetes en tu propio computador o en el de tu laboratorio, te recomiendo [Miniforge](https://github.com/conda-forge/miniforge) (o Anaconda/Miniconda con el canal [conda-forge](https://conda-forge.org/docs/user/introduction.html#how-can-i-install-packages-from-conda-forge)). Este método también proporciona una manera de [instalar ROOT en el mismo entorno](https://github.com/conda-forge/root-feedstock#readme). Para configurar el entorno utiliza el archivo [environment.yml](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/environment.yml) (junto con su archivo [requirements.txt](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/requirements.txt)) en la [base](https://github.com/hsf-training/hsf-training-scikit-hep-webpage) de este repositorio, como:
 
 ```bash
-conda install uproot awkward   # ... others?
+conda install uproot awkward   # ... ¿otros?
 ```
 
-Alternatively, you can install all required packages locally with pip: Take a look at the [environment.yml](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/environment.yml) and the [requirements.txt](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/requirements.txt) for a list (this includes all dependencies listed under the pip key and some of the dependencies listed above).
+Alternativamente, puedes instalar todos los paquetes requeridos localmente con pip: consulta el archivo environment.yml y el archivo requirements.txt para una lista (esto incluye todas las dependencias bajo la clave pip y algunas de las dependencias mencionadas anteriormente).
 
 
 {% include links.md %}
