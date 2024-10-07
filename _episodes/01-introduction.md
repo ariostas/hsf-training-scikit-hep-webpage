@@ -1,303 +1,303 @@
 ---
-title: "Introduction: Python background"
+title: "Introducción: Fundamentos de Python"
 teaching: 20
 exercises: 5
 questions:
- - "How much Python do we need to know?"
- - "What is \"array-oriented\" or \"columnar\" processing?"
- - "What is a \"software ecosystem\"?"
+ - "¿Cuánto Python necesitamos saber?"
+ - "¿Qué es el procesamiento \"orientado a arrays\" o \"columnar\"?"
+ - "¿Qué es un \"ecosistema de software\"?"
 objectives:
- - "Get the background context to get started with the Uproot lessons."
+ - "Obtener el contexto necesario para comenzar con las lecciones de Uproot."
 keypoints:
- - "Be familiar with the syntax of Python dicts, NumPy arrays, slicing rules, and bitwise logic operators."
- - "Large-scale computations in Python tend to be performed one array at a time, rather than one scalar operation at a time."
- - "You, as a user, will likely be gluing together many packages in each data analysis."
+ - "Familiarízate con la sintaxis de diccionarios de Python, arrays de NumPy, reglas de slicing y operadores lógicos a nivel de bits."
+ - "Los cálculos a gran escala en Python tienden a realizarse en un array, en lugar de una operación escalar a la vez."
+ - "Tú, como usuario, probablemente estarás integrando muchos paquetes en cada análisis de datos."
 ---
 
-# How much Python do we need to know?
+# ¿Cuánto Python necesitamos saber?
 
-## Basic Python
+## Python básico
 
-Most students start this module after a Python introduction or are already familiar with the *basics* of Python. For instance, you should be comfortable with the Python essentials such as assigning variables,
+La mayoría de los estudiantes comienzan este módulo después de una introducción a Python o ya están familiarizados con los *fundamentos* de Python. Por ejemplo, deberías sentirte cómodo con lo esencial de Python, como asignar variables,
 
 ```python
 x = 5
 ```
 
-if-statements,
+sentencias if,
 
 ```python
 if x < 5:
-    print("small")
+    print("pequeño")
 else:
-    print("big")
+    print("grande")
 ```
 
-and loops.
+y bucles.
 
 ```python
 for i in range(x):
     print(i)
 ```
 
-Your data analysis will likely be full of statements like these, though the kinds of operations we'll be focusing on in this module have a form more like
+Tu análisis de datos probablemente estará lleno de declaraciones como estas, aunque los tipos de operaciones en las que nos enfocaremos en este módulo tendrán una forma más parecida a
 
 ```python
-import compiled_library
+import libreria_compilada
 
-compiled_library.do_computationally_expensive_thing(big_array)
+libreria_compilata.operacion_computacional_costosa(array_grande)
 ```
 
-The trick is for the Python-side code to be expressive enough and the compiled code to be general enough that you don't need a new `compiled_library` for each thing you want to do. The libraries presented in this module are designed with interfaces that let you express what you want to do in Python and have it run in compiled code.
+El truco está en que el código del lado de Python sea lo suficientemente expresivo y el código compilado lo suficientemente general para que no necesites una nueva `libreria_compilada` para cada cosa que quieras hacer. Las librería presentadas en este módulo están diseñadas con interfaces que te permiten expresar lo que quieres hacer en Python y ejecutarlo en código compilado.
 
-## Dict-like and array-like interfaces
+## Interfaces tipo diccionario y tipo array
 
-The two most important data types for these interfaces are dicts
+Los dos tipos de datos más importantes para estas interfaces son los diccionarios
 
 ```python
-some_dict = {"word": 1, "another word": 2, "some other word": 3}
+un_diccionario = {"palabra": 1, "otra palabra": 2, "alguna otra palabra": 3}
 ```
 ```python
-some_dict["some other word"]
+un_diccionario["alguna otra palabra"]
 ```
 ```python
-for key in some_dict:
-    print(key, some_dict[key])
+for clave in un_diccionario:
+    print(clave, un_diccionario[clave])
 ```
 
-and arrays
+y los arrays
 
 ```python
 import numpy as np
 
-some_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
+un_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
 ```
 ```python
-some_array[4]
+un_array[4]
 ```
 ```python
-for x in some_array:
+for x in un_array:
     print(x)
 ```
 
-Although these data types are important, what's more important is the *interfaces* to these types. They both represent functions from keys to values:
+Aunque estos tipos de datos son importantes, lo que es más importante son las interfaces de estos tipos. Ambos representan funciones de claves a valores:
 
-- dicts (usually) map from strings to Python objects,
-- arrays (always) map from non-negative integers to numerical values.
+- los diccionarios (usualmente) mapean de cadenas a objetos de Python,
+- los arrays (siempre) mapean de enteros no negativos a valores numéricos.
 
-Most of the types we will see in this module also map strings or integers to data, and they use the same syntax as dicts and arrays. If you're familiar with the dict and array interfaces, you usually won't have to look up documentation on dict-like and array-like types unless you're trying to do something special.
+La mayoría de los tipos que veremos en este módulo también mapean cadenas o enteros a datos, y usan la misma sintaxis que los diccionarios y los arrays. Si estás familiarizado con las interfaces de diccionarios y arrays, generalmente no tendrás que consultar la documentación sobre tipos parecidos a diccionarios o arrays, a menos que estés tratando de hacer algo especial.
 
-## Review of the dict interface
+## Repaso de la interfaz de diccionario
 
-For dicts, the things that can go in square brackets (its "domain," as a function) are its `keys`.
+Para los diccionarios, las cosas que pueden ir entre corchetes (su "dominio," como una función) son sus claves (`keys`).
 
 ```python
-some_dict = {"word": 1, "another word": 2, "some other word": 3}
-some_dict.keys()
+un_diccionario = {"palabra": 1, "otra palabra": 2, "alguna otra palabra": 3}
+un_diccionario.keys()
 ```
 
-Nothing other than these keys can be used in square brackets
+Nada más que estas claves puede usarse entre corchetes.
 
 ```python
-some_dict["something I made up"]
+un_diccionario["algo que inventé"]
 ```
 
 unless it has been added to the dict.
 
 ```python
-some_dict["something I made up"] = 123
-some_dict["something I made up"]
+un_diccionario["algo que inventé"] = 123
+un_diccionario["algo que inventé"]
 ```
 
-The things that can come out of a dict (its "range," as a function) are its `values`.
+Los elementos que pueden salir de un diccionario (su "rango," como una función) son sus valores (`values`).
 
 ```python
-some_dict.values()
+un_diccionario.values()
 ```
 
-You can get keys and values as 2-tuples by asking for its `items`.
+Puedes obtener las claves y los valores como tuplas de 2 elementos al solicitar sus artículos (`items`).
 
 ```python
-some_dict.items()
+un_diccionario.items()
 
-for key, value in some_dict.items():
-    print(key, value)
+for clave, valor in un_diccionario.items():
+    print(clave, valor)
 ```
 
-## Review of the array interface
+## Repaso de la interfaz de array
 
-For arrays, the things that can go in square brackets (its "domain," as a function) are integers from zero up to but not including its length.
+Para los arrays, las cosas que pueden ir entre corchetes (su "dominio," como una función) son enteros desde cero hasta, pero sin incluir, su longitud.
 
 ```python
 import numpy as np
 
-some_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
-some_array[0]  # okay
-some_array[1]  # okay
-some_array[9]  # okay
-some_array[10]  # not okay
+un_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
+un_array[0]  # está bien
+un_array[1]  # está bien
+un_array[9]  # está bien
+un_array[10]  # no está bien
 ```
 
-You can get the length of an array (and the number of keys in a dict) with `len`:
+Puedes obtener la longitud de un array (y el número de claves en un diccionario) con `len`:
 
 ```python
-len(some_array)
+len(un_array)
 ```
 
-It's important to remember that index `0` corresponds to the first item in the array, `1` to the second, and so on, which is why `len(some_array)` is not a valid index.
+Es importante recordar que el índice `0` corresponde al primer elemento del array, `1` al segundo, y así sucesivamente, por lo que `len(some_array)` no es un índice válido.
 
-Negative indexes are allowed, but they count from the end of the list to the beginning. For instance,
+Se permiten índices negativos, pero cuentan desde el final de la lista hacia el principio. Por ejemplo,
 
 ```python
-some_array[-1]
+un_array[-1]
 ```
 
-returns the last item. **Quick quiz:** which negative value returns the first item, equivalent to `0`?
+devuelve el último elemento. **Quiz rápido:** ¿qué valor negativo devuelve el primer elemento, equivalente a `0`?
 
-Arrays can also be "sliced" by putting a colon (`:`) between the starting and stopping index.
+Los arrays también se pueden rebanar o partir colocando dos puntos (`:`) entre el índice inicial y el índice final.
 
 ```python
-some_array[2:7]
+un_array[2:7]
 ```
 
-**Quick quiz:** why is `7.7` not included in the output?
+**Quiz rápido:** ¿por qué `7.7` no está incluido?
 
-The above is common to all Python sequences. Arrays, however, can be multidimensional and this allows for more kinds of slicing.
+Lo anterior es común a todas las secuencias de Python. Sin embargo, los arrays pueden ser multidimensionales y esto permite más tipos de rebanado.
 
 ```python
 array3d = np.arange(2 * 3 * 5).reshape(2, 3, 5)
 ```
 
-Separating two slices in the square brackets with a comma
+Separando dos rebanadas en los corchetes con una coma
 
 ```python
 array3d[:, 1:, 1:]
 ```
 
-selects the following:
+selecciona lo siguiente:
 
 ![array3d-highlight1]({{ page.root }}/fig/array3d-highlight1.png)
 
-**Quick quiz:** how do you select the following?
+**Quiz rápido:** ¿cómo seleccionas lo siguiente?
 
 ![array3d-highlight2]({{ page.root }}/fig/array3d-highlight2.png)
 
 ## Filtering with booleans and integers: "cuts"
 
-In addition to integers and slices, arrays can be included in the square brackets.
+Además de enteros y rebanadas, los arrays pueden incluirse en los corchetes.
 
-An array of booleans with the same length as the sliced array selects all items that line up with `True`.
+Un array de booleanos con la misma longitud que el array rebanado selecciona todos los elementos que coinciden con verdadero (`True`).
 
 ```python
-some_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
-boolean_array = np.array(
+un_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
+array_booleano = np.array(
     [True, True, True, True, True, False, True, False, True, False]
 )
 
-some_array[boolean_array]
+un_array[array_booleano]
 ```
 
-An array of integers selects items by index.
+Un array de enteros selecciona elementos por índice.
 
 ```python
-some_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
-integer_array = np.array([0, 1, 2, 3, 4, 6, 8])
+un_array = np.array([0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9])
+array_de_enteros = np.array([0, 1, 2, 3, 4, 6, 8])
 
-some_array[integer_array]
+un_array[array_de_enteros]
 ```
 
-Integer-slicing is more general than boolean-slicing because an array of integers can also change the order of the data and repeat items.
+El rebanado por enteros es más general que el rebanado booleano porque un array de enteros también puede cambiar el orden de los datos y repetir elementos.
 
 ```python
-some_array[np.array([4, 2, 2, 2, 9, 8, 3])]
+un_array[np.array([4, 2, 2, 2, 9, 8, 3])]
 ```
 
-Both come up in natural contexts. Boolean arrays often come from performing a calculation on all elements of an array that returns boolean values.
+Ambos aparecen en contextos naturales. Los arrays booleanos a menudo provienen de realizar un cálculo en todos los elementos de un array que devuelve valores booleanos.
 
 ```python
-even_valued_items = some_array * 10 % 2 == 0
+elementos_pares = un_array * 10 % 2 == 0
 
-some_array[even_valued_items]
+un_array[elementos_pares]
 ```
 
-This is how we'll be computing and applying cuts: expressions like
+Así es como estaremos calculando y aplicando cortes: expresiones como
 
 ```python
-good_muon_cut = (muons.pt > 10) & (abs(muons.eta) < 2.4)
+corte_muon_bueno = (muones.pt > 10) & (abs(muones.eta) < 2.4)
 
-good_muons = muons[good_muon_cut]
+muones_buenos = muones[corte_muon_bueno]
 ```
 
-## Logical operators: `&`, `|`, `~`, and parentheses
+## Operadores lógicos: `&`, `|`, `~`, y paréntesis
 
-If you're coming from C++, you might expect "and," "or," "not" to be `&&`, `||`, `!`.
+Si vienes de C++, podrías esperar que "y," "o," "no" sean `&&`, `||`, `!`.
 
-If you're coming from non-array Python, you might expect them to be `and`, `or`, `not`.
+Si vienes de Python no orientado a arrays, podrías esperar que sean `and`, `or`, `not`.
 
-In array expressions (unfortunately!), we have to use Python's bitwise operators, `&`, `|`, `~`, and ensure that comparisons are surrounded in parentheses. Python's `and`, `or`, `not` are not applied across arrays and bitwise operators have a surprising operator-precedence.
+En las expresiones de arrays (¡desafortunadamente!), tenemos que usar los operadores bit a bit de Python, `&`, `|`, `~`, y asegurarnos de que las comparaciones estén rodeadas de paréntesis. Los operadores `and`, `or`, `not` de Python no se aplican a través de arrays y los operadores bit a bit tienen una precedencia de operadores sorprendente.
 
 ```python
 x = 0
 
-x > -10 & x < 10  # probably not what you expect!
+x > -10 & x < 10  # ¡probablemente no es lo que esperas!
 
 (x > -10) & (x < 10)
 ```
 
 ![bitwise-operator-parentheses]({{ page.root }}/fig/bitwise-operator-parentheses.png)
 
-# What is "array-oriented" or "columnar" processing?
+# ¿Qué es el procesamiento "orientado a arrays" o "columnar"?
 
-Expressions like
-
-```python
-even_valued_items = some_array * 10 % 2 == 0
-```
-
-perform the `*`, `%`, and `==` operations on every item of `some_array` and return arrays. Without NumPy, the above would have to be written as
+Expresiones como
 
 ```python
-even_valued_items = []
-
-for x in some_array:
-    even_valued_items.append(x * 10 % 2 == 0)
+elementos_pares = un_array * 10 % 2 == 0
 ```
 
-This is more cumbersome when you want to apply a mathematical formula to every item of a collection, but it is also considerably slower. Every step in a Python `for` loop performs sanity checks that are unnecessary for numerical values with uniform type, checks that would happen at compile-time in a compiled library. NumPy *is* a compiled library; its `*`, `%`, and `==` operators, as well as many other functions, are performed in fast, compiled loops.
+realizan las operaciones `*`, `%`, y `==` en cada elemento de `un_array` y devuelven arrays. Sin NumPy, lo anterior tendría que escribirse como
 
-This is how we get expressiveness and speed. Languages with operators that apply array at a time, rather than one scalar value at a time, are called "array-oriented" or "columnar" (referring to, for instance, Pandas DataFrame columns).
+```python
+elementos_pares = []
 
-Quite a few interactive, data-analysis languages are array-oriented, deriving from the original APL. "Array-oriented" is a programming paradigm in the same sense as "functional" or "object-oriented."
+for x in un_array:
+    elementos_pares.append(x * 10 % 2 == 0)
+```
+
+Esto es más engorroso cuando deseas aplicar una fórmula matemática a cada elemento de una colección, pero también es considerablemente más lento. Cada paso en un bucle `for` en Python realiza verificaciones de sanidad que son innecesarias para valores numéricos de tipo uniforme, verificaciones que se harían en tiempo de compilación en una librería compilada. NumPy *es* una librería compilada; sus operadores `*`, `%`, y `==`, así como muchas otras funciones, se realizan en bucles rápidos y compilados.
+
+Así es como obtenemos expresividad y velocidad. Los lenguajes con operadores que se aplican a arrays completos, en lugar de un valor escalar a la vez, se llaman lenguajes "orientados a arrays" o "columnares" (refiriéndose, por ejemplo, a las columnas de un DataFrame de Pandas).
+
+Bastantes lenguajes interactivos de análisis de datos están orientados a arrays, derivando del APL original. "Orientado a arrays" es un paradigma de programación en el mismo sentido que "funcional" u "orientado a objetos".
 
 ![apl-timeline]({{ page.root }}/fig/apl-timeline.png)
 
-# What is a "software ecosystem"?
+# ¿Qué es un "ecosistema de software"?
 
-Some programming environments, like Mathematica, Emacs, and ROOT, attempt to provide you with everything you need in one package. There's only one thing to install and components within the framework should work well together because they were developed together. However, it can be hard to use the framework with other, unrelated software packages.
+Algunos entornos de programación, como Mathematica, Emacs y ROOT, intentan proporcionarte todo lo que necesitas en un solo paquete. Solo hay una cosa que instalar y los componentes dentro del marco deberían funcionar bien juntos porque se desarrollaron en conjunto. Sin embargo, puede ser difícil usar el marco con otros paquetes de software no relacionados.
 
-Ecosystems, like UNIX, iOS App Store, and Python, consist of many small software packages that each do one thing and know how to communicate with other packages through conventions and protocols. There's usually a centralized installation mechanism, and it is the user's (your) responsibility to piece together what you need. However, the set of possibilities is open-ended and grows as needs develop.
+Los ecosistemas, como UNIX, la App Store de iOS y Python, consisten en muchos paquetes de software pequeños que hacen una sola cosa y saben cómo comunicarse con otros paquetes a través de convenciones y protocolos. Por lo general, hay un mecanismo de instalación centralizado, y es responsabilidad del usuario reunir lo que se necesita. Sin embargo, el conjunto de posibilidades es abierto y crece a medida que surgen nuevas necesidades.
 
-In mainstream Python, this means that
+En el Python mainstream, esto significa que
 
-- NumPy *only* deals with arrays,
-- Pandas *only* deals with tables,
-- Matplotlib *only* plots,
-- Jupyter *only* provides a notebook interface,
-- Scikit-Learn *only* does machine learning,
-- h5py *only* interfaces with HDF5 files,
+- NumPy *solo* maneja arrays,
+- Pandas *solo* maneja tablas,
+- Matplotlib *solo* genera gráficos,
+- Jupyter *solo* proporciona una interfaz de cuaderno,
+- Scikit-Learn *solo* hace aprendizaje automático,
+- h5py *solo* interactúa con archivos HDF5,
 - etc.
 
-Python packages for high-energy physics are being developed with a similar model:
+Los paquetes de Python para física de altas energías se están desarrollando con un modelo similar:
 
-- Uproot *only* reads and writes ROOT files,
-- Awkward Array *only* deals with arrays of irregular types,
-- hist *only* deals with histograms,
-- iminuit *only* optimizes,
-- zfit *only* fits,
-- Particle *only* provides PDG-style data,
+- Uproot *solo* lee y escribe archivos ROOT,
+- Awkward Array *solo* maneja arrays de tipos irregulares,
+- hist *solo* maneja histogramas,
+- iminuit *solo* optimiza,
+- zfit *solo* ajusta,
+- Particle *solo* proporciona datos al estilo PDG,
 - etc.
 
-To make things easier to find, they're cataloged under a common name at [scikit-hep.org](https://scikit-hep.org).
+Para facilitar su localización, están catalogados bajo un nombre común en [scikit-hep.org](https://scikit-hep.org).
 
 ![scikit-hep-logos]({{ page.root }}/fig/scikit-hep-logos.png)
 
