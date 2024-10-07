@@ -4,15 +4,15 @@ root: .  # Is the only page that don't follow the partner /:path/index.html
 permalink: index.html  # Is the only page that don't follow the partner /:path/index.html
 ---
 
-Welcome!
+¡Bienvenido/a!
 
-This tutorial aims to demonstrate how to quickly get started with [Scikit-HEP](https://scikit-hep.org), a collection of packages for particle physics analysis in Python.
+Este tutorial tiene como objetivo demostrar cómo comenzar rápidamente con [Scikit-HEP](https://scikit-hep.org), una colección de paquetes para el análisis de física de partículas en Python.
 
-The tutorial was written by [Jim Pivarski](https://github.com/jpivarski/) and was first taught during a [Software Carpentry Workshop](https://indico.cern.ch/event/1097111/timetable/#day-2021-12-15) on December 15, 2021.
+El tutorial fue escrito por [Jim Pivarski](https://github.com/jpivarski/) y fue enseñado por primera vez durante un [Taller de Software Carpentry](https://indico.cern.ch/event/1097111/timetable/#day-2021-12-15) el 15 de diciembre de 2021.
 
-> ## Prerequisites
+> ## Prerrequisitos
 >
-> * Basic Python knowledge, e.g. through the [Software Carpentry Programming with Python lesson](https://swcarpentry.github.io/python-novice-inflammation/)
+> * Conocimiento básico de Python, por ejemplo, a través de la lección [Análisis y visualización de datos usando Python](https://datacarpentry.org/python-ecology-lesson-es/)
 {: .prereq}
 
 
