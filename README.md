@@ -1,38 +1,36 @@
 [![Build status](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/actions/workflows/pages/pages-build-deployment)
 [![HSF Training Center](https://img.shields.io/badge/HSF%20Training%20Center-browse-ff69b4)](https://hepsoftwarefoundation.org/training/curriculum.html)
-# Scikit-HEP tutorial
+# Tutorial de Scikit-HEP
 
-This is a tutorial on [Scikit-HEP](https://scikit-hep.org), a collection of packages for particle physics analysis in Python.
+Este es un tutorial sobre [Scikit-HEP](https://scikit-hep.org), una colección de paquetes para el análisis de física de partículas en Python.
 
-![scikit hep ecosystem](fig/scikit-hep-logos.png)
+![ecosistema scikit hep](fig/scikit-hep-logos.png)
 
-It was written by [Jim Pivarski][jpivarski] using the [Software Carpentry's][carpentries] lesson template and first taught during a [Software Carpentry Workshop](https://indico.cern.ch/event/1097111/timetable/#day-2021-12-15) on December 15, 2021.
+Fue escrito por [Jim Pivarski][jpivarski] utilizando la plantilla de lecciones de [Software Carpentry][carpentries] y se enseñó por primera vez durante un [Taller de Software Carpentry](https://indico.cern.ch/event/1097111/timetable/#day-2021-12-15) el 15 de diciembre de 2021. La versión original en inglés se puede encontrar [aquí](https://github.com/hsf-training/hsf-training-scikit-hep-webpage).
 
-This repository builds a webpage that is live [here](https://hsf-training.github.io/hsf-training-scikit-hep-webpage/)!
+¡Este repositorio genera una página web que está disponible [aquí](https://hsf-training.github.io/hsf-training-scikit-hep-webpage/)!
 
-The Scikit-HEP tutorial is part of the [HSF training curriculum](https://hepsoftwarefoundation.org/training/curriculum).
+El tutorial de Scikit-HEP es parte del [currículo de formación del HSF](https://hepsoftwarefoundation.org/training/curriculum).
 
-## Contributing
+## Contribuciones
 
-We welcome all contributions to improve the lesson! Maintainers will do their best to help you if you have any
-questions, concerns, or experience any difficulties along the way.
+¡Damos la bienvenida a todas las contribuciones para mejorar el tutorial! Los mantenedores harán todo lo posible por ayudarte si tienes alguna pregunta, inquietud o experimentas alguna dificultad durante el proceso.
 
-We'd like to ask you to familiarize yourself with our [Contribution Guide](CONTRIBUTING.md) and have a look at
-the [more detailed guidelines][lesson-example] on proper formatting, ways to render the lesson locally, and even
-how to write new episodes.
+Nos gustaría pedirte que te familiarices con nuestra [Guía de Contribuciones](CONTRIBUTING.md) y revises las [directrices más detalladas][lesson-example] sobre el formato adecuado, cómo renderizar la lección localmente e incluso cómo escribir nuevos episodios.
 
-## Maintainer(s)
+## Mantenedores
 
-* [Jim Pivarski][jpivarski]
+* [Andres Rios Tascon][ariostas]
 
-## Authors
+## Autores
 
-A list of contributors to the lesson can be found in [AUTHORS](AUTHORS)
+Una lista de los colaboradores de la lección se puede encontrar en [AUTORES](AUTHORS).
 
-## Citation
+## Citación
 
-To cite this lesson, please consult with [CITATION](CITATION)
+Para citar este tutorial, consulta con [CITATION](CITATION).
 
 [lesson-example]: https://carpentries.github.io/lesson-example
 [jpivarski]: https://github.com/jpivarski/
 [carpentries]: https://software-carpentry.org/
+[ariostas]: https://github.com/ariostas/
