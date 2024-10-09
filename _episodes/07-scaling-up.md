@@ -1,51 +1,51 @@
 ---
-title: "Tools for scaling up"
+title: "Herramientas para escalar"
 teaching: 10
 exercises: 0
 questions:
- - "How do I turn working code fragments into batch jobs?"
- - "Where can I look for more help?"
+ - "¿Cómo puedo convertir fragmentos de código funcional en trabajos por lotes?"
+ - "¿Dónde puedo buscar más ayuda?"
 objectives:
- - "Learn where to go next."
+ - "Aprender a dónde ir a continuación."
 keypoints:
- - "See Coffea for more about scaling up your analysis."
- - "Pythonic high-energy physics is a broad and growing ecosystem."
+ - "Consulta Coffea para obtener más información sobre cómo escalar tu análisis."
+ - "La física de partículas en Python es un ecosistema amplio y en crecimiento."
 ---
 
-# Scaling up
+# Escalando
 
-The tools described in these lessons are intended to be used *within* a script that is scaled up for large datasets.
+Las herramientas descritas en estas lecciones están destinadas a ser utilizadas *dentro* de un script que se escale para conjuntos de datos grandes.
 
-You could use any of them in an ordinary GRID job (or other batch processor).
+Puedes usar cualquiera de ellas en un trabajo GRID ordinario (u otro procesador por lotes).
 
-However, the [Coffea project](https://github.com/CoffeaTeam) ([documentation](https://coffeateam.github.io/coffea/)) is building a *distributed* ecosystem that integrates Pythonic analysis with data analysis farms. This is too large of a subject to cover here, but check out the software and join the [Coffea user meetings](https://indico.cern.ch/category/11674/) if you're interested.
+Sin embargo, el [proyecto Coffea](https://github.com/CoffeaTeam) ([documentación](https://coffeateam.github.io/coffea/)) está construyendo un ecosistema *distribuido* que integra el análisis en Python con granjas de análisis de datos. Este es un tema demasiado amplio para cubrir aquí, pero consulta el software y únete a las [reuniones de usuarios de Coffea](https://indico.cern.ch/category/11674/) si estás interesado.
 
-# Scikit-HEP Resources
+# Recursos de Scikit-HEP
 
 - [scikit-hep.org](https://scikit-hep.org)
-- Uproot [GitHub](https://github.com/scikit-hep/uproot5), [documentation](https://uproot.readthedocs.io)
-- Awkward Array [GitHub](https://github.com/scikit-hep/awkward-1.0), [documentation](https://awkward-array.org)
-- boost-histogram [GitHub](https://github.com/scikit-hep/boost-histogram), [documentation](https://boost-histogram.readthedocs.io)
-- hist [GitHub](https://github.com/scikit-hep/hist), [documentation](https://hist.readthedocs.io)
-- Unified Histogram Interface [GitHub](https://github.com/scikit-hep/uhi), [documentation](https://uhi.readthedocs.io)
-- mplhep [GitHub](https://github.com/scikit-hep/mplhep), [documentation](https://mplhep.readthedocs.io)
-- iminuit [GitHub](https://github.com/scikit-hep/iminuit), [documentation](https://iminuit.readthedocs.io)
-- zfit [GitHub](https://github.com/zfit/zfit), [documentation](https://zfit.readthedocs.io)
-- Vector [GitHub](https://github.com/scikit-hep/vector), [documentation](https://vector.readthedocs.io)
-- Particle [GitHub](https://github.com/scikit-hep/particle), [documentation](https://github.com/scikit-hep/particle/blob/master/notebooks/ParticleDemo.ipynb)
+- Uproot [GitHub](https://github.com/scikit-hep/uproot5), [documentación](https://uproot.readthedocs.io)
+- Awkward Array [GitHub](https://github.com/scikit-hep/awkward-1.0), [documentación](https://awkward-array.org)
+- boost-histogram [GitHub](https://github.com/scikit-hep/boost-histogram), [documentación](https://boost-histogram.readthedocs.io)
+- hist [GitHub](https://github.com/scikit-hep/hist), [documentación](https://hist.readthedocs.io)
+- Unified Histogram Interface [GitHub](https://github.com/scikit-hep/uhi), [documentación](https://uhi.readthedocs.io)
+- mplhep [GitHub](https://github.com/scikit-hep/mplhep), [documentación](https://mplhep.readthedocs.io)
+- iminuit [GitHub](https://github.com/scikit-hep/iminuit), [documentación](https://iminuit.readthedocs.io)
+- zfit [GitHub](https://github.com/zfit/zfit), [documentación](https://zfit.readthedocs.io)
+- Vector [GitHub](https://github.com/scikit-hep/vector), [documentación](https://vector.readthedocs.io)
+- Particle [GitHub](https://github.com/scikit-hep/particle), [documentación](https://github.com/scikit-hep/particle/blob/master/notebooks/ParticleDemo.ipynb)
 - hepunits [GitHub](https://github.com/scikit-hep/hepunits)
-- fastjet [GitHub](https://github.com/scikit-hep/fastjet), [documentation](https://fastjet.readthedocs.io)
-- pyhf [GitHub](https://github.com/scikit-hep/pyhf), [documentation](https://pyhf.readthedocs.io)
-- hepstats [GitHub](https://github.com/scikit-hep/hepstats), [documentation](https://scikit-hep.org/hepstats)
-- cabinetry [GitHub](https://github.com/scikit-hep/cabinetry), [documentation](https://iris-hep.org/projects/cabinetry.html)
+- fastjet [GitHub](https://github.com/scikit-hep/fastjet), [documentación](https://fastjet.readthedocs.io)
+- pyhf [GitHub](https://github.com/scikit-hep/pyhf), [documentación](https://pyhf.readthedocs.io)
+- hepstats [GitHub](https://github.com/scikit-hep/hepstats), [documentación](https://scikit-hep.org/hepstats)
+- cabinetry [GitHub](https://github.com/scikit-hep/cabinetry), [documentación](https://iris-hep.org/projects/cabinetry.html)
 - histoprint [GitHub](https://github.com/scikit-hep/histoprint)
-- decaylanguage [GitHub](https://github.com/scikit-hep/decaylanguage), [documentation](https://github.com/scikit-hep/decaylanguage/blob/master/notebooks/DecayLanguageDemo.ipynb)
-- GooFit [GitHub](https://github.com/GooFit/GooFit), [documentation](https://goofit.github.io/)
+- decaylanguage [GitHub](https://github.com/scikit-hep/decaylanguage), [documentación](https://github.com/scikit-hep/decaylanguage/blob/master/notebooks/DecayLanguageDemo.ipynb)
+- GooFit [GitHub](https://github.com/GooFit/GooFit), [documentación](https://goofit.github.io/)
 - pyhepmc [GitHub](https://github.com/scikit-hep/pyhepmc)
 - pylhe [GitHub](https://github.com/scikit-hep/pylhe)
 
-and finally
+y finalmente
 
-- cookie [GitHub](https://github.com/scientific-python/cookie), [documentation](https://learn.scientific-python.org/development), a template for making your own...
+- cookie [GitHub](https://github.com/scientific-python/cookie), [documentación](https://learn.scientific-python.org/development), una plantilla para crear la tuya propia...
 
 {% include links.md %}
