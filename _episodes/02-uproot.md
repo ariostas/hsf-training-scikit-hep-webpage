@@ -1,98 +1,98 @@
 ---
-title: "Basic file I/O with Uproot"
+title: "Operaciones básicas de entrada/salida de archivos con Uproot"
 teaching: 25
 exercises: 0
 questions:
- - "How can I find my data in a ROOT file?"
- - "How can I plot it?"
- - "How can I write new data to a ROOT file?"
+ - "¿Cómo puedo encontrar mis datos en un archivo ROOT?"
+ - "¿Cómo puedo graficarlos?"
+ - "¿Cómo puedo escribir nuevos datos en un archivo ROOT?"
 objectives:
- - "Learn how to navigate through a ROOT file."
- - "Learn how to send ROOT data to the libraries that can act on them."
- - "Learn how to write histograms and TTrees to files."
+ - "Aprender a navegar por un archivo ROOT."
+ - "Aprender cómo enviar los datos ROOT a las librerías que pueden actuar sobre ellos."
+ - "Aprender a escribir histogramas y TTrees en archivos."
 keypoints:
- - "Uproot TDirectories and TTrees have a dict-like interface."
- - "Uproot reading methods are primarily intended to get data into a more specialized library."
- - "Uproot writing is more limited, but it can write histograms and TTrees."
+ - "Los TDirectories y TTrees de Uproot tienen una interfaz similar a la de un diccionario."
+ - "Los métodos de lectura de Uproot están principalmente destinados a enviar datos a una librería más especializada."
+ - "La escritura con Uproot es más limitada, pero puede escribir histogramas y TTrees."
 ---
 
-# What is Uproot?
+# ¿Qué es Uproot?
 
-Uproot is a Python package that reads and writes ROOT files and is *only* concerned with reading and writing (no analysis, no plotting, etc.). It interacts with NumPy, Awkward Array, and Pandas for computations, boost-histogram/hist for histogram manipulation and plotting, Vector for Lorentz vector functions and transformations, Coffea for scale-up, etc.
+Uproot es un paquete de Python que lee y escribe archivos ROOT, y está *únicamente* enfocado en la lectura y escritura (sin análisis, sin gráficos, etc.). Interactúa con NumPy, Awkward Array y Pandas para cálculos, boost-histogram/hist para manipulación y visualización de histogramas, Vector para funciones y transformaciones de vectores de Lorentz, Coffea para escalado, etc.
 
-Uproot is implemented using only Python and Python libraries. It doesn't have a compiled part or require a specific version of ROOT. (This means that if you *do* use ROOT for something other than I/O, your choice of ROOT version is not constrained by I/O.)
+Uproot está implementado solo con Python y librerías de Python. No tiene una parte compilada ni requiere una versión específica de ROOT. (Esto significa que si *usas* ROOT para algo más que entrada/salida, tu elección de versión de ROOT no estará limitada por la entrada/salida).
 
 ![abstraction-layers]({{ page.root }}/fig/abstraction-layers.png)
 
-As a consequence of being an independent implementation of ROOT I/O, Uproot might not be able to read/write certain data types. Which data types are not implemented is a moving target, as new ones are always being added. A good approach for reading data is to just try it and see if Uproot complains. For writing, see the lists of supported types in the [Uproot documentation](https://uproot.readthedocs.io/en/latest/basic.html#writing-objects-to-a-file) (blue boxes in the text).
+Como consecuencia de ser una implementación independiente de entrata/salida de ROOT, Uproot podría no ser capaz de leer/escribir ciertos tipos de datos. Qué tipos de datos no están implementados es un objetivo en constante movimiento, ya que siempre se están agregando nuevos. Una buena forma de leer datos es simplemente intentarlo y ver si Uproot genera algún error. Para la escritura, consulta las listas de tipos compatibles en la [documentación de Uproot](https://uproot.readthedocs.io/en/latest/basic.html#writing-objects-to-a-file) (cajas azules en el texto).
 
-# Reading data from a file
+# Leer datos desde un archivo
 
-## Opening the file
+## Abrir el archivo
 
-To open a file for reading, pass the name of the file to [uproot.open](https://uproot.readthedocs.io/en/latest/uproot.reading.open.html). In scripts, it is good practice to use [Python's with statement](https://realpython.com/python-with-statement/) to close the file when you're done, but if you're working interactively, you can use a direct assignment.
+Para abrir un archivo para lectura, pasa el nombre del archivo a [uproot.open](https://uproot.readthedocs.io/en/latest/uproot.reading.open.html). En los scripts, es una buena práctica usar la [instrucción with de Python](https://realpython.com/python-with-statement/) para cerrar el archivo cuando termines, pero si estás trabajando de forma interactiva, puedes usar una asignación directa.
 
 ```python
 import skhep_testdata
 
-filename = skhep_testdata.data_path(
+nombre_del_archivo = skhep_testdata.data_path(
     "uproot-Event.root"
-)  # downloads this test file and gets a local path to it
+)  # descarga este archivo de prueba y obtiene una ruta local hacia él
 
 import uproot
 
-file = uproot.open(filename)
+archivo = uproot.open(nombre_del_archivo)
 ```
 
-To access a remote file via HTTP or XRootD, use a `"http://..."`, `"https://..."`, or `"root://..."` URL. If the Python interface to XRootD is not installed, the error message will explain how to install it.
+Para acceder a un archivo remoto mediante HTTP o XRootD, utiliza una URL que comience con `"http://..."`, `"https://..."`, o `"root://..."`. Si la interfaz de Python para XRootD no está instalada, el mensaje de error explicará cómo instalarla.
 
-## Listing contents
+## Listar contenidos
 
-This "`file`" object actually represents a directory, and the named objects in that directory are accessible with a dict-like interface. Thus, `keys`, `values`, and `items` return the key names and/or read the data. If you want to just list the objects without reading, use `keys`. (This is like ROOT's `ls()`, except that you get a Python list.)
+Este objeto "`archivo`" en realidad representa un directorio, y los objetos nombrados en ese directorio son accesibles a través de una interfaz similar a un diccionario. Por lo tanto, `keys`, `values`, y `items` devuelven los nombres de las claves y/o leen los datos. Si solo quieres listar los objetos sin leerlos, utiliza `keys`. (Esto es similar a `ls()` de ROOT, excepto que obtienes una lista en Python).
 
 ```python
-file.keys()
+archivo.keys()
 ```
 
-Often, you want to know the type of each object as well, so [uproot.ReadOnlyDirectory](https://uproot.readthedocs.io/en/latest/uproot.reading.ReadOnlyDirectory.html) objects also have a `classnames` method, which returns a dict of object names to class names (without reading them).
+A menudo, también querrás conocer el tipo de cada objeto, por lo que los objetos [uproot.ReadOnlyDirectory](https://uproot.readthedocs.io/en/latest/uproot.reading.ReadOnlyDirectory.html) también tienen un método `classnames`, que devuelve un diccionario de nombres de objetos a nombres de clases (sin leerlos).
 
 ```python
-file.classnames()
+archivo.classnames()
 ```
 
-## Reading a histogram
+## Lectura de un histograma
 
-If you're familiar with ROOT, `TH1F` would be recognizable as histograms and `TTree` would be recognizable as a dataset. To read one of the histograms, put its name in square brackets:
+Si estás familiarizado con ROOT, `TH1F` te resultará reconocible como histogramas y `TTree` como un conjunto de datos. Para leer uno de los histogramas, coloca su nombre entre corchetes:
 
 ```python
-h = file["hstat"]
+h = archivo["hstat"]
 h
 ```
 
-Uproot doesn't do any plotting or histogram manipulation, so the most useful methods of `h` begin with "to": `to_boost` (boost-histogram), `to_hist` (hist), `to_numpy` (NumPy's 2-tuple of contents and edges), `to_pyroot` (PyROOT), etc.
+Uproot no realiza ningún tipo de graficación ni manipulación de histogramas, por lo que los métodos más útiles de `h` comienzan con "to": `to_boost` (boost-histogram), `to_hist` (hist), `to_numpy` (la tupla de 2 elementos de NumPy que contiene el contenido y los bordes), `to_pyroot` (PyROOT), etc.
 
 ```python
 h.to_hist().plot()
 ```
 
-Uproot histograms also satisfy the [UHI plotting protocol](https://uhi.readthedocs.io/en/latest/plotting.html), so they have methods like `values` (bin contents), `variances` (errors squared), and `axes`.
+Los histogramas de Uproot también cumplen con el [protocolo de graficación UHI](https://uhi.readthedocs.io/en/latest/plotting.html), por lo que tienen métodos como `values` (contenidos de los bins), `variances` (errores al cuadrado) y `axes`.
 
 ```python
 h.values()
 h.variances()
-list(h.axes[0])  # "x", "y", "z" or 0, 1, 2
+list(h.axes[0])  # "x", "y", "z" o 0, 1, 2
 ```
 
-## Reading a TTree
+## Lectura de un TTree
 
-A TTree represents a potentially large dataset. Getting it from the [uproot.ReadOnlyDirectory](https://uproot.readthedocs.io/en/latest/uproot.reading.ReadOnlyDirectory.html) only returns its TBranch names and types. The `show` method is a convenient way to list its contents:
+Un TTree representa un conjunto de datos potencialmente grande. Obtenerlo del [uproot.ReadOnlyDirectory](https://uproot.readthedocs.io/en/latest/uproot.reading.ReadOnlyDirectory.html) solo devuelve los nombres y tipos de sus TBranch. El método `show` es una forma conveniente de listar su contenido:
 
 ```python
-t = file["T"]
+t = archivo["T"]
 t.show()
 ```
 
-Be aware that you can get the same information from `keys` (an [uproot.TTree](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TTree.TTree.html) is dict-like), `typename`, and `interpretation`.
+Ten en cuenta que puedes obtener la misma información de `keys` (un [uproot.TTree](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TTree.TTree.html) es similar a un diccionario), `typename` e `interpretation`.
 
 ```python
 t.keys()
@@ -101,26 +101,26 @@ t["event/fNtrack"].typename
 t["event/fNtrack"].interpretation
 ```
 
-(If an [uproot.TBranch](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TBranch.TBranch.html) has no `interpretation`, it can't be read by Uproot.)
+(Si un [uproot.TBranch](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TBranch.TBranch.html) no tiene `interpretation`, no se puede leer con Uproot.)
 
-The most direct way to read data from an [uproot.TBranch](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TBranch.TBranch.html) is by calling its `array` method.
+La forma más directa de leer datos de un [uproot.TBranch](https://uproot.readthedocs.io/en/latest/uproot.behaviors.TBranch.TBranch.html) es llamando a su método `array`.
 
 ```python
 t["event/fNtrack"].array()
 ```
 
-We'll consider other methods in the next lesson.
+Consideraremos otros métodos en la próxima lección.
 
-## Reading a... what is that?
+## Leyendo un... ¿qué es eso?
 
-This file also contains an instance of type [TProcessID](https://root.cern.ch/doc/master/classTProcessID.html). These aren't typically useful in data analysis, but Uproot manages to read it anyway because it follows certain conventions (it has "class streamers"). It's presented as a generic object with an `all_members` property for its data members (through all superclasses).
+Este archivo también contiene una instancia del tipo [TProcessID](https://root.cern.ch/doc/master/classTProcessID.html). Estos tipos de objetos no son típicamente útiles en el análisis de datos, pero Uproot logra leerlo de todos modos porque sigue ciertas convenciones (tiene "streamers de clase"). Se presenta como un objeto genérico con una propiedad `all_members` para sus miembros de datos (a través de todas las superclases).
 
 ```python
-file["ProcessID0"]
-file["ProcessID0"].all_members
+archivo["ProcessID0"]
+archivo["ProcessID0"].all_members
 ```
 
-Here's a more useful example of that: a supernova search with the IceCube experiment has custom classes for its data, which Uproot reads and represents as objects with `all_members`.
+Aquí hay un ejemplo más útil de eso: una búsqueda de supernovas con el experimento IceCube tiene clases personalizadas para sus datos, que Uproot lee y representa como objetos con `all_members`.
 
 ```python
 icecube = uproot.open(skhep_testdata.data_path("uproot-issue283.root"))
@@ -130,77 +130,77 @@ icecube["config/detector"].all_members
 icecube["config/detector"].all_members["ChannelIDMap"]
 ```
 
-# Writing data to a file
+# Escribiendo datos en un archivo
 
-Uproot's ability to *write* data is more limited than its ability to *read* data, but some useful cases are possible.
+La capacidad de Uproot para *escribir* datos es más limitada que su capacidad para *leer* datos, pero algunos casos útiles son posibles.
 
-## Opening files for writing
+## Abrir archivos para escribir
 
-First of all, a file must be opened for writing, either by creating a completely new file or updating an existing one.
+Primero que nada, un archivo debe ser abierto para escribir, ya sea creando un archivo completamente nuevo o actualizando uno existente.
 
 ```python
-output1 = uproot.recreate("completely-new-file.root")
-output2 = uproot.update("existing-file.root")
+archivo1 = uproot.recreate("archivo-completamente-nuevo.root")
+archivo2 = uproot.update("archivo-existente.root")
 ```
 
-(Uproot cannot write over a network; output files must be local.)
+(Uproot no puede escribir a través de una red; los archivos de salida deben ser locales.)
 
-## Writing strings and histograms
+## Escribiendo cadenas y histogramas
 
-These [uproot.WritableDirectory](https://uproot.readthedocs.io/en/latest/uproot.writing.writable.WritableDirectory.html) objects have a dict-like interface: you can put data in them by assigning to square brackets.
+Estos objetos [uproot.WritableDirectory](https://uproot.readthedocs.io/en/latest/uproot.writing.writable.WritableDirectory.html) tienen una interfaz similar a un diccionario: puedes poner datos en ellos asignando a corchetes.
 
 ```python
-output1["some_string"] = "This will be a TObjString."
+archivo1["una_cadena"] = "Este objeto va a ser un TObjString."
 
-output1["some_histogram"] = file["hstat"]
+output1["un_histograma"] = archivo["hstat"]
 
 import numpy as np
 
-output1["nested_directory/another_histogram"] = np.histogram(
+output1["un_directorio/otro_histograma"] = np.histogram(
     np.random.normal(0, 1, 1000000)
 )
 ```
 
-In ROOT, the name of an object is a property of the object, but in Uproot, it's a key in the TDirectory that holds the object, so that's why the name is on the left-hand side of the assignment, in square brackets. Only the data types listed in the blue box [in the documentation](https://uproot.readthedocs.io/en/latest/basic.html#writing-objects-to-a-file) are supported: mostly just histograms.
+En ROOT, el nombre de un objeto es una propiedad del objeto, pero en Uproot, es una clave en el TDirectory que contiene el objeto, por lo que el nombre está en el lado izquierdo de la asignación, entre corchetes. Solo se admiten los tipos de datos enumerados en el cuadro azul [en la documentación](https://uproot.readthedocs.io/en/latest/basic.html#writing-objects-to-a-file): principalmente solo histogramas.
 
-## Writing TTrees
+## Escribiendo TTrees
 
-TTrees are potentially large and might not fit in memory. Generally, you'll need to write them in batches.
+Los TTrees son potencialmente grandes y pueden no caber en la memoria. Generalmente, necesitarás escribirlos en lotes.
 
-One way to do this is to assign the first batch and `extend` it with subsequent batches:
+Una forma de hacer esto es asignar el primer lote y `extend` con lotes posteriores:
 
 ```python
 import numpy as np
 
-output1["tree1"] = {
+archivo1["tree1"] = {
     "x": np.random.randint(0, 10, 1000000),
     "y": np.random.normal(0, 1, 1000000),
 }
-output1["tree1"].extend(
+archivo1["tree1"].extend(
     {"x": np.random.randint(0, 10, 1000000), "y": np.random.normal(0, 1, 1000000)}
 )
-output1["tree1"].extend(
+archivo1["tree1"].extend(
     {"x": np.random.randint(0, 10, 1000000), "y": np.random.normal(0, 1, 1000000)}
 )
 ```
 
-another is to create an empty TTree with [uproot.WritableDirectory.mktree](https://uproot.readthedocs.io/en/latest/uproot.writing.writable.WritableDirectory.html#mktree), so that every write is an extension.
+Otra forma es crear un TTree vacío con [uproot.WritableDirectory.mktree](https://uproot.readthedocs.io/en/latest/uproot.writing.writable.WritableDirectory.html#mktree), de modo que cada escritura sea una extensión.
 
 ```python
-output1.mktree("tree2", {"x": np.int32, "y": np.float64})
-output1["tree2"].extend(
+archivo1.mktree("tree2", {"x": np.int32, "y": np.float64})
+archivo1["tree2"].extend(
     {"x": np.random.randint(0, 10, 1000000), "y": np.random.normal(0, 1, 1000000)}
 )
-output1["tree2"].extend(
+archivo1["tree2"].extend(
     {"x": np.random.randint(0, 10, 1000000), "y": np.random.normal(0, 1, 1000000)}
 )
-output1["tree2"].extend(
+archivo1["tree2"].extend(
     {"x": np.random.randint(0, 10, 1000000), "y": np.random.normal(0, 1, 1000000)}
 )
 ```
 
-Performance tips are given in the next lesson, but in general, it pays to write few large batches, rather than many small batches.
+Se dan consejos de rendimiento en la próxima lección, pero en general, es más beneficioso escribir pocos lotes grandes en lugar de muchos lotes pequeños.
 
-The only data types that can be assigned or passed to `extend` are listed in the blue box [in this documentation](https://uproot.readthedocs.io/en/latest/basic.html#writing-ttrees-to-a-file). This includes jagged arrays (described in the lesson after next), but not more complex types.
+Los únicos tipos de datos que se pueden asignar o pasar a `extend` están listados en la caja azul [en esta documentación](https://uproot.readthedocs.io/en/latest/basic.html#writing-ttrees-to-a-file). Esto incluye arrays dentados (descritos en la lección después de la próxima), pero no tipos más complejos.
 
 {% include links.md %}
