@@ -76,6 +76,3 @@ conda install uproot awkward   # ... others?
 ```
 
 Alternatively, you can install all required packages locally with pip: Take a look at the [environment.yml](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/environment.yml) and the [requirements.txt](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/requirements.txt) for a list (this includes all dependencies listed under the pip key and some of the dependencies listed above).
-
-
-{% include links.md %}
