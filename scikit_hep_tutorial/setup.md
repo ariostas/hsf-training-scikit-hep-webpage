@@ -1,15 +1,13 @@
----
-title: Setup
----
+# Setup
 
-# For the tutorial
+## For the tutorial
 
 This tutorial uses a sampler of [Scikit-HEP project](https://scikit-hep.org/) packages (Uproot, Awkward Array, hist, Vector, zfit, Particle, fastjet), which are all components that you might or might not use in your analysis, as well as Python 3, NumPy, and a smattering of other mainstream libraries (Pandas, Matplotlib, JupyterLab, Numba).
 
 Rather than asking you to install them all, we provide two different ways to run everything in your browser: GitHub Codespaces and Binder.
 We recommend that you use GitHub Codespaces (see instructions below). If this is not an option for you, you can use Binder, though be aware that the resources might be very limited.
 
-## GitHub codespaces
+### GitHub codespaces
 
 <p align="center">
   <iframe width="427" height="251" src="https://www.youtube.com/embed/gcAuyqW4QRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -58,7 +56,7 @@ Try to execute the first line to see that everything is set up properly.
 
 You're ready to go 🎉
 
-## Binder
+### Binder
 
 Simply click the following button:
 
@@ -69,7 +67,7 @@ Simply click the following button:
 </p>
 
 
-# After the tutorial
+## After the tutorial
 
 If you want to install some of these packages on your own or your lab's computer, I recommend [Miniforge](https://github.com/conda-forge/miniforge) (or Anaconda/Miniconda with the [conda-forge channel](https://conda-forge.org/docs/user/introduction.html#how-can-i-install-packages-from-conda-forge)). This method also provides a way to [install ROOT in the same environment](https://github.com/conda-forge/root-feedstock#readme). To setup the environment use the [environment.yml](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/environment.yml) file (plus its [requirements.txt](https://github.com/hsf-training/hsf-training-scikit-hep-webpage/blob/main/requirements.txt) file) in [base](https://github.com/hsf-training/hsf-training-scikit-hep-webpage) of this repository as:
 

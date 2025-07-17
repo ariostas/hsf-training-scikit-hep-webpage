@@ -1,0 +1,16 @@
+# Table of contents
+
+format: jb-book
+root: 00-welcome
+parts:
+  - chapters:
+    - file: setup
+  - caption: Lessons
+    chapters:
+    - file: 01-introduction
+    - file: 02-uproot
+    - file: 03-ttree-details
+    - file: 04-awkward
+    - file: 05-histograms
+    - file: 06-lorentz-vectors
+    - file: 07-scaling-up
